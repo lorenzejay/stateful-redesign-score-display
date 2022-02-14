@@ -1,34 +1,22 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+TASK: Redesign how score is shown on the web app - ex) https://app.stateful.com/@lorenzejay
 
-## Getting Started
+# Original
 
-First, run the development server:
+<img src='/public/score-original.png' />
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+# Redesign
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Change pill like border-radius to more subtle border radius to compliment other component border radius.
+2. Instead of clicking the number, use hover (onMouseEnter/onMouseLeave) to display stats.
+   - why?
+     - I see it as an interaction vs an action. We are not being redirected to another page instead are "interacting" with our guage or compass to see our stats.
+     - The score by itself doesn't indicate our performance from first glance. It can possibly represent other things. Consistency in terms of seeing the guage from VS code to now on the web app will make that clear that the guage represents your stats.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+<img src='/public/score-redesign.png' />
+<img src='/public/score-redesign-hover.png' />
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+# Run
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. git clone
+2. npm install
+3. npm run dev => visible on http://localhost:3000/
