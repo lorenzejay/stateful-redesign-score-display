@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import GaugeChart from "react-gauge-chart";
+import Stats from "../component/stats";
 
 const Home: NextPage = () => {
   const [showStats, setShowStats] = useState(false);
@@ -13,10 +14,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="bg-white lg:px-32 xl:px-24">
-        <section className=" 2xl:w-3/4 mx-auto   shadow-xl min-h-screen flex items-center justify-center px-5">
-          <div className="w-full lg:px-24 flex flex-col items-center justify-center">
-            <div className=" flex flex-1 flex-row justify-around items-center h-44 p-4 border rounded-lg  shadow-xl">
+      <main className="bg-white lg:px-32 xl:px-24 min-h-screen">
+        <section className=" 2xl:w-3/4 mx-auto   shadow-xl min-h-screen flex flex-col items-center justify-center px-5">
+          <div className="w-full lg:px-24 flex flex-col items-center justify-center h-full">
+            <div className="mb-10 flex flex-row justify-around items-center h-44 p-4 border rounded-lg  shadow-xl">
               <div className=" flex items-center min-w-min shrink-0 w-16 h-16">
                 <img
                   src="./ljaph-4.jpg"
@@ -32,7 +33,8 @@ const Home: NextPage = () => {
                   main in index.tsx
                 </p>
               </div>
-              <div
+
+              {/* <div
                 className={`relative hidden md:flex  items-center cursor-pointer `}
                 onMouseEnter={() => setShowStats(true)}
                 onMouseLeave={() => setShowStats(false)}
@@ -93,10 +95,11 @@ const Home: NextPage = () => {
                       <span className="font-semibold">Breaks: </span>0 of 10 pts
                     </p>
                   </div>
-                </div>
-              </div>
+                </div> */}
+              {/* </div> */}
             </div>
           </div>
+          <Stats />
         </section>
       </main>
     </div>

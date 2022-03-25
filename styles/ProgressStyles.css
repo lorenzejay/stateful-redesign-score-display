@@ -1,0 +1,16 @@
+.CircularProgressbar-path {
+  stroke: green;
+  border-radius: 100px;
+}
+.CircularProgressbar-trail {
+  stroke: #413d3d35;
+}
+/* .CircularProgressbar-background {
+  fill: green;
+} */
+.CircularProgressbar {
+  vertical-align: middle;
+  border-radius: 999px;
+  padding: 0;
+  margin: 0;
+}
