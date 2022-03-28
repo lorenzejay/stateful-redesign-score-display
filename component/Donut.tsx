@@ -1,12 +1,18 @@
-import { ChartData, Dough } from "chart.js";
-import React, { useMemo, useState } from "react";
-import { Chart, Doughnut } from "react-chartjs-2";
+import React from "react";
+import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { Chart as ChartOg, ArcElement, Tooltip, Title } from "chart.js";
+import {
+  Chart as ChartOg,
+  ArcElement,
+  Tooltip,
+  Title,
+  ChartData,
+} from "chart.js";
 ChartOg.register([ArcElement, Tooltip, Title, ChartDataLabels]);
 const percentage = (partialValue: number, totalValue: number) => {
   return (Math.min(partialValue, totalValue) / totalValue) * 100;
 };
+//sample-data
 const adamData: any = {
   day: {
     __typename: "Day",
@@ -75,31 +81,31 @@ const adamData: any = {
     },
   },
 };
-const backgroundColors = [
-  "rgb(255, 99, 132)",
-  "rgb(54, 162, 235)",
-  "rgb(255, 205, 86)",
-  "#FF99E6",
-  "#CCFF1A",
-  "#FF1A66",
-  "#E6331A",
-  "#33FFCC",
-  "#66994D",
-  "#B366CC",
-  "#4D8000",
-  "#B33300",
-  "#CC80CC",
-  "#66664D",
-  "#991AFF",
-  "#E666FF",
-  "#4DB3FF",
-  "#1AB399",
-  "#E666B3",
-  "#33991A",
-  "#CC9999",
-  "#B3B31A",
-  "#00E680",
-];
+// const backgroundColors = [
+//   "rgb(255, 99, 132)",
+//   "rgb(54, 162, 235)",
+//   "rgb(255, 205, 86)",
+//   "#FF99E6",
+//   "#CCFF1A",
+//   "#FF1A66",
+//   "#E6331A",
+//   "#33FFCC",
+//   "#66994D",
+//   "#B366CC",
+//   "#4D8000",
+//   "#B33300",
+//   "#CC80CC",
+//   "#66664D",
+//   "#991AFF",
+//   "#E666FF",
+//   "#4DB3FF",
+//   "#1AB399",
+//   "#E666B3",
+//   "#33991A",
+//   "#CC9999",
+//   "#B3B31A",
+//   "#00E680",
+// ];
 const Donut = ({
   statement,
   setStatement,
@@ -145,11 +151,9 @@ const Donut = ({
   return (
     <div className="w-64  mx-auto h-full flex items-center justify-center">
       <Doughnut
-        // onMouseEnter={(e) => console.log(e.target)}
-
         data={chartData}
         options={{
-          //   circumference: 180,
+          //   circumference: 180, //if I want a half circle
           //   rotation: 270,
           cutout: "10%",
 
@@ -193,17 +197,15 @@ const Donut = ({
               //     return rotation < 180 ? rotation - 90 : rotation + 90;
               //   },
               anchor: "center",
-              //   anchor: function (context) {
-              //     console.log("anchor", context);
-              //   },
+
               formatter: function (value, context) {
-                console.log("value", value);
-                console.log("context", context);
+                // console.log("value", value);
+                // console.log("context", context);
                 const current =
                   adamData.day.scoreBreakdown.contributors[
                     context.datasetIndex
                   ];
-                console.log("current", current);
+                // console.log("current", current);
                 const percentString = percentage(
                   current.points,
                   current.possiblePoints
@@ -218,14 +220,13 @@ const Donut = ({
               callbacks: {
                 label: function (context) {
                   //   console.log("context", context.dataset.label);
-                  console.log("context", context);
+                  //   console.log("context", context);
                   const current =
                     adamData.day.scoreBreakdown.contributors[
                       context.datasetIndex
                     ];
 
                   const points = context.dataset.data[0];
-                  const possiblePoints = context.dataset.data[1];
                   // points remaining
                   if (context.dataIndex === 1)
                     return `${
