@@ -18,7 +18,7 @@ const CircularComp = () => {
         outerRadius={100}
       /> */}
       {/* <Progress1 /> */}
-      <div>
+      <div className="pt-10">
         <Donut statement={statement} setStatement={setStatement} />
       </div>
       <p className="mx-auto w-full text-center">{statement}</p>

@@ -1,14 +1,9 @@
-import { ChartData } from "chart.js";
+import { ChartData, Dough } from "chart.js";
 import React, { useMemo, useState } from "react";
-import { Chart } from "react-chartjs-2";
-import {
-  Chart as ChartOg,
-  ArcElement,
-  ChartConfiguration,
-  Tooltip,
-  Title,
-} from "chart.js";
-ChartOg.register([ArcElement, Tooltip, Title]);
+import { Chart, Doughnut } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import { Chart as ChartOg, ArcElement, Tooltip, Title } from "chart.js";
+ChartOg.register([ArcElement, Tooltip, Title, ChartDataLabels]);
 const percentage = (partialValue: number, totalValue: number) => {
   return (Math.min(partialValue, totalValue) / totalValue) * 100;
 };
@@ -112,76 +107,55 @@ const Donut = ({
   statement: string;
   setStatement: (x: string) => void;
 }) => {
-  //   console.log()
+  function getColor(value: number) {
+    //value from 0 to 1
+    var hue = ((12 + value) * 120).toString(10);
+    return ["hsl(", hue, ",100%,50%)"].join("");
+  }
 
   //adamData.day.scoreBreakdown.contributors.points / possiblePoints, name
-  const chartData: ChartData = {
+  const chartData: ChartData<"doughnut"> = {
     // labels: ["Coding Activity", "Working Hours", "Breaks", "Branches"],
     datasets: adamData.day.scoreBreakdown.contributors.map((d: any) => {
-      //   console.log("d", d);
-      const color1 =
-        backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
-
-      const color2 =
-        backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
-      console.log("color1", color1);
-      let secondNum = d.points * (percentage(d.points, d.possiblePoints) / 100);
-      console.log("secondNum", secondNum);
-      //ratio based so we need to do some conversions
-      let data;
-      if (d.points / d.possiblePoints === 1) {
-        data = [d.points];
-      } else {
-        data = [d.points, secondNum];
+      let colorChoice = "red";
+      if (d.points / d.possiblePoints <= 0.25) {
+        colorChoice = "red";
+      } else if (
+        d.points / d.possiblePoints > 0.25 &&
+        d.points / d.possiblePoints < 0.65
+      )
+        colorChoice = "yellow";
+      else {
+        colorChoice = "green";
       }
+
       //   console.log("d", d);
       return {
         label: d.displayName,
-        data: data,
-        backgroundColor: [color1, "#413d3d35"],
+
+        data: [d.points, d.possiblePoints - d.points],
+        backgroundColor: [
+          getColor(percentage(d.points, d.possiblePoints) * 100),
+          "#413d3d35",
+        ],
       };
     }),
-    // datasets: [
-    //   {
-    //     label: "Coding Activity",
-    //     data: [14, 45],
-    //     backgroundColor: [
-    //       "rgb(255, 99, 132)",
-    //       "rgb(54, 162, 235)",
-    //       "rgb(255, 205, 86)",
-    //     ],
-    //   },
-    //   {
-    //     label: "Working Hours",
-    //     data: [10, 45],
-    //     backgroundColor: ["orange", "green"],
-    //   },
-    // ],
   };
-  //   const options: ChartConfiguration = {
-  //     options: {
-  //       backgroundColor: "green",
-  //     },
-  //   };
-  const [hoverableData, setHoverableData] = useState<any>();
-  const [data3, setData3] = useState();
-  //   console.log(hoverableData);
 
-  //   console.log("chartData", chartData);
   return (
-    <div className="w-1/2 mx-auto h-full flex items-center justify-center">
-      <Chart
+    <div className="w-64  mx-auto h-full flex items-center justify-center">
+      <Doughnut
         // onMouseEnter={(e) => console.log(e.target)}
+
         data={chartData}
-        type="doughnut"
         options={{
+          //   circumference: 180,
+          //   rotation: 270,
+          cutout: "10%",
+
           onHover: function (evt, element) {
-            // console.log("evt", evt);
             if (!element[0]) return;
-            // console.log("element", element[0].datasetIndex);
-            // console.log(
-            //   adamData.day.scoreBreakdown.contributors[element[0].datasetIndex]
-            // );
+
             const current =
               adamData.day.scoreBreakdown.contributors[element[0].datasetIndex];
             const percentString = percentage(
@@ -193,17 +167,58 @@ const Donut = ({
                 current.displayName
               } (${Math.round(percentString)}%)`
             );
-            // adamData.day.scoreBreakdown.contributors.forEach(
-            //   (d: any, i: number) => {
-            //   }
-            // );
           },
           plugins: {
+            datalabels: {
+              color: "black",
+              backgroundColor: "white",
+              borderRadius: 3,
+              padding: 2,
+              font: {
+                size: 11,
+                weight: "bold",
+              },
+              //   textAlign: "left",
+              //   rotation: function (ctx) {
+              //     const valuesBefore = ctx.dataset.data
+              //       .slice(0, ctx.dataIndex)
+              //       //@ts-ignore
+              //       .reduce((a, b) => a + b, 0);
+              //     //@ts-ignore
+              //     const sum = ctx.dataset.data.reduce((a, b) => a + b, 0);
+              //     const rotation =
+              //       //@ts-ignore
+              //       ((valuesBefore + ctx.dataset.data[ctx.dataIndex] / 2) / sum) *
+              //       360;
+              //     return rotation < 180 ? rotation - 90 : rotation + 90;
+              //   },
+              anchor: "center",
+              //   anchor: function (context) {
+              //     console.log("anchor", context);
+              //   },
+              formatter: function (value, context) {
+                console.log("value", value);
+                console.log("context", context);
+                const current =
+                  adamData.day.scoreBreakdown.contributors[
+                    context.datasetIndex
+                  ];
+                console.log("current", current);
+                const percentString = percentage(
+                  current.points,
+                  current.possiblePoints
+                );
+                if (context.dataIndex === 1) {
+                  return ``;
+                }
+                return `${Math.round(percentString)}%`;
+              },
+            },
             tooltip: {
               callbacks: {
                 label: function (context) {
                   //   console.log("context", context.dataset.label);
-                  //   console.log("context", context);
+                  console.log("context", context);
                   const current =
                     adamData.day.scoreBreakdown.contributors[
                       context.datasetIndex
@@ -211,7 +226,11 @@ const Donut = ({
 
                   const points = context.dataset.data[0];
                   const possiblePoints = context.dataset.data[1];
-
+                  // points remaining
+                  if (context.dataIndex === 1)
+                    return `${
+                      current.possiblePoints - points
+                    } points remaining.`;
                   return `${points} / ${current.possiblePoints} of ${context.dataset.label}`;
                 },
               },
