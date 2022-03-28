@@ -82,7 +82,7 @@ const adamData: any = {
   },
 };
 
-const Donut = ({
+const HalfDonut = ({
   statement,
   setStatement,
 }: {
@@ -115,8 +115,8 @@ const Donut = ({
       <Doughnut
         data={chartData}
         options={{
-          //   circumference: 180, //if I want a half circle
-          //   rotation: 270,
+          circumference: 180, //if I want a half circle
+          rotation: 270,
           cutout: "10%", //size of the middle circle
           onHover: function (_, element) {
             if (!element[0]) return; //if we hover out
@@ -142,7 +142,7 @@ const Donut = ({
                 size: 11,
                 weight: "bold",
               },
-              //if you want to try rotating the data labels.
+              //if you want to
               //   textAlign: "left",
               //   rotation: function (ctx) {
               //     const valuesBefore = ctx.dataset.data
@@ -158,7 +158,7 @@ const Donut = ({
               //     return rotation < 180 ? rotation - 90 : rotation + 90;
               //   },
               textAlign: "end",
-              formatter: function (_, context) {
+              formatter: function (value, context) {
                 // console.log("value", value);
                 // console.log("context", context);
                 const current =
@@ -203,4 +203,4 @@ const Donut = ({
   );
 };
 
-export default Donut;
+export default HalfDonut;

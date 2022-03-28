@@ -1,22 +1,35 @@
-TASK: Redesign how score is shown on the web app - ex) https://app.stateful.com/@lorenzejay
+Setup
+`npm install`
+`npm run dev`
 
-# Original
+In your browser go to http://localhost:3000/ or http://localhost:3000/circularComp
 
-<img src='/public/score-original.png' />
+To edit Donut Component go to `component/Donut.tsx`
+Page lives on - `/pages/circularComp.tsx` and on `/pages/index.tsx`
 
-# Redesign
+## Notes
 
-1. Change pill like border-radius to more subtle border radius to compliment other component border radius.
-2. Instead of clicking the number, use hover (onMouseEnter/onMouseLeave) to display stats.
-   - why?
-     - I see it as an interaction vs an action. We are not being redirected to another page instead are "interacting" with our guage or compass to see our stats.
-     - The score by itself doesn't indicate our performance from first glance. It can possibly represent other things. Consistency in terms of seeing the guage from VS code to now on the web app will make that clear that the guage represents your stats.
+Edit labels on Donut Comp plugins - label
 
-<img src='/public/score-redesign.png' />
-<img src='/public/score-redesign-hover.png' />
+```
+<Doughnut
+...
+ plugins: {
+            datalabels: {
+              color: "black",
+              backgroundColor: "white",
+              borderRadius: 3,
+              padding: 2,
+              font: {
+                size: 11,
+                weight: "bold",
+              },...
+            }
+```
 
-# Run
+## Tech Used
 
-1. git clone
-2. npm install
-3. npm run dev => visible on http://localhost:3000/
+1. React
+2. React-chartjs-2 - https://www.npmjs.com/package/react-chartjs-2
+3. Chart.js - https://www.chartjs.org/
+4. chartjs-plugin-datalabels - https://www.npmjs.com/package/chartjs-plugin-datalabels (to create the labels)
