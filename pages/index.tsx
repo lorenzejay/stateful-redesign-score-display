@@ -5,11 +5,78 @@ import GaugeChart from "react-gauge-chart";
 import Donut from "../component/Donut";
 import HalfDonut from "../component/HalfDonut";
 import Stats from "../component/stats";
-
+import DonutInJs from "../component/DonutJs";
 const Home: NextPage = () => {
   const [statement, setStatement] = useState("default");
-
-  const [showStats, setShowStats] = useState(false);
+  //sample-data (adam)
+  const adamData = {
+    day: {
+      __typename: "Day",
+      date: "2022-03-25",
+      score: 69,
+      scoreBreakdown: {
+        __typename: "DayScore",
+        points: 69,
+        contributors: [
+          {
+            __typename: "DayScoreContributor",
+            name: "target_work_hours",
+            displayName: "Target work hours",
+            points: 16,
+            possiblePoints: 45,
+            hints: [
+              {
+                __typename: "DayScoreContributorHint",
+                name: "duration",
+                unit: "hours",
+                targetValue: 8,
+                currentValue: 5,
+              },
+            ],
+          },
+          {
+            __typename: "DayScoreContributor",
+            name: "target_activity_duration",
+            displayName: "Target activity duration",
+            points: 31,
+            possiblePoints: 45,
+            hints: [
+              {
+                __typename: "DayScoreContributorHint",
+                name: "duration",
+                unit: "ms",
+                targetValue: 14400000,
+                currentValue: 12265867,
+              },
+              {
+                __typename: "DayScoreContributorHint",
+                name: "average_sessions",
+                unit: "sessions_per_hour",
+                targetValue: 3,
+                currentValue: 3.4,
+              },
+            ],
+          },
+          {
+            __typename: "DayScoreContributor",
+            name: "target_rest",
+            displayName: "Target rest",
+            points: 1,
+            possiblePoints: 5,
+            hints: [],
+          },
+          {
+            __typename: "DayScoreContributor",
+            name: "penalize_default_branch_usage",
+            displayName: "Penalize default branch usage",
+            points: 5,
+            possiblePoints: 5,
+            hints: [],
+          },
+        ],
+      },
+    },
+  };
   return (
     <div>
       <Head>
@@ -19,13 +86,20 @@ const Home: NextPage = () => {
       </Head>
       <div className="h-screen w-full">
         <div className="pt-10">
-          <Donut statement={statement} setStatement={setStatement} />
+          {/* ts version */}
+          {/* <Donut statement={statement} setStatement={setStatement} /> */}
+          {/* ts version */}
+
+          <DonutInJs
+            setStatement={setStatement}
+            contributors={adamData.day.scoreBreakdown.contributors}
+          />
         </div>
-        <p className="mt-10 rounded-md bg-gray-300 shadow-md w-1/2 lg:w-1/4 mx-auto p-3 text-center">
+        {/* <p className="mt-10 rounded-md bg-gray-300 shadow-md w-1/2 lg:w-1/4 mx-auto p-3 text-center">
           {statement}
-        </p>
+        </p> */}
         <div>
-          <HalfDonut statement={statement} setStatement={setStatement} />
+          {/* <HalfDonut statement={statement} setStatement={setStatement} /> */}
         </div>
         <p className="mt-10 rounded-md bg-gray-300 shadow-md w-1/2 lg:w-1/4 mx-auto p-3 text-center">
           {statement}
