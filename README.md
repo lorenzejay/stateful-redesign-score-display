@@ -52,7 +52,17 @@ const getDatasetsForDonut = (contributors) => {
 
 <Donut>
 ## Notes
-
+### Sizing - 
+Done on the wrapper div above `<Doughnut>`
+Change the inline-styling to replace `mx-auto and style={{}}` to fit your component
+   <mark><div className="mx-auto " style={{ width: 250, height: 250 }}></mark>
+```
+  <div className="mx-auto " style={{ width: 250, height: 250 }}>
+      <Doughnut
+        data={{
+          datasets: getDatasetsForDonut(contributors),
+        }}....
+```
 Edit labels on Donut Comp plugins - label
 
 ```
